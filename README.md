@@ -1,5 +1,6 @@
 # 2.5D-Player-System-Godot
 
+A Simple 2.5 player movement system
 
 ## Nodes
  -- Player (CharacterBody3D)  
