@@ -2,17 +2,38 @@ extends CharacterBody3D
 
 @export var speed := 5.0
 @export var jump_velocity := 6.0
-@export var gravity := 9.8
+@export var gravity := 15
+
+@export var coyote_time := 0.12
+@export var jump_buffer_time := 0.12
 
 @onready var sprite : AnimatedSprite3D = %AnimatedSprite3D
 
+var coyote_timer := 0.0
+var jump_buffer_timer := 0.0
+
 func _physics_process(delta):
 	
-	# -- Jumping + apple 
+	# -- track last time we used floor (coyote time)
+	if is_on_floor():
+		coyote_timer = coyote_time
+	else:
+		coyote_timer -= delta
+	
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+	else:
+		jump_buffer_timer -= delta
+	
+	# -- Jumping + apple
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	
+	if jump_buffer_timer > 0.0 and coyote_timer > 0.0:
 		velocity.y = jump_velocity
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
+	
 	
 	# -- x = left/right | y = up/down
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
