@@ -13,7 +13,7 @@
    | Generate = Off  
 
 ## AnimatedSprite3D
--- Flags
+-- Flags  
    | Billboard = Enabled ***keeps sprite always facing camera***  
    | Texture Filte = Nearest ***stops pixel art from blurring***  
  -- Pixel Size = 0.05  
